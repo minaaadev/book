@@ -14,16 +14,4 @@ public class DemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
-
-	@GetMapping
-	public List<Book> hello() {
-		return List.of(
-				new Book(
-						1L,
-						"Pachinko",
-						"Min Jin Lee",
-						12000
-				)
-			);
-		}
-	}
+}
