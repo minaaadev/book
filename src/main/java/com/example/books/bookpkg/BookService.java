@@ -16,7 +16,7 @@ public class BookService {
         this.bookRepository=bookRepository;
     }
 
-    //book 목록 반환
+    //책 목록 반환
     public List<Book> getBooks() {return bookRepository.findAll();}
 
     public void addNewBook(Book book) {
@@ -40,9 +40,8 @@ public class BookService {
         public void updateBook(Long bookId,
                                String title,
                                String author) {
-        Book book = bookRepository.findById(bookId)
-                .orElseThrow(()->new IllegalStateException(
-                        "id가 " + bookId +"인 책이 존재하지 않습니다."));
+        Book book = bookRepository.findById(bookId).orElseThrow(()
+                ->new IllegalStateException("id가 " + bookId +"인 책이 존재하지 않습니다."));
 
     if (title!=null && title.length()>0 && !Objects.equals(book.getTitle(),title)){
         book.setTitle(title);
@@ -55,4 +54,8 @@ public class BookService {
         book.setAuthor(author);
     }
 }
+
+    public void saveBook(Book book) {
+        bookRepository.save(book);
+    }
 }
