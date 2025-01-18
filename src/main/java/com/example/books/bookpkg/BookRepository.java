@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface BookRepository
-        extends JpaRepository<Book,Long > {
+public interface BookRepository extends JpaRepository<Book,Long > {
 
     @Query("SELECT s FROM Book s WHERE s.price=?1")
     Optional<Book> findBookByPrice(int price);

@@ -1,16 +1,16 @@
 package com.example.books.bookpkg;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RestController
-@RequestMapping(path="api/b1/book")
+@Controller
+@RequestMapping(path = "api/b1/books")
 public class BookController {
+
     private final BookService bookService;
 
     @Autowired
@@ -18,32 +18,38 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    //모든 책 정보 반환
+    // 모든 책 정보 반환
     @GetMapping
-    public List<Book> getBooks() {
-        return bookService.getBooks();
+    public String getBooks(Model model) {
+        List<Book> books = bookService.getBooks();
+        model.addAttribute("books", books);
+        return "book_list";  // "book_list" 템플릿을 반환
     }
 
-    //새 책 정보 등록
+    // 새 책 정보 등록
     @PostMapping
-    public void registerNewBook(@RequestBody Book book) {
+    public String registerNewBook(@RequestBody Book book) {
         bookService.addNewBook(book);
+        return "redirect:/books";  // 책 목록 페이지로 리다이렉트
     }
 
-    //책 정보 삭제
-    @DeleteMapping(path = "{bookId}")
-    public void deleteBook(@PathVariable("studentId") Long bookId) {
-        bookService.deleteBook(bookId);
+    // 책 수정 폼 페이지로 이동 (GET)
+    @GetMapping("books/edit/{id}")
+    public String editBookForm(@PathVariable Long id, Model model) {
+        //Book book = bookService.getBookById(id);
+        model.addAttribute("book", bookService.getBookById(id));
+        return "edit";  // "edit" 템플릿을 반환
     }
 
-    @PutMapping(path = "{bookId}")
-    public void updateBook(
-            @PathVariable("bookId") Long bookId,
-            @RequestParam(required = false) String title,
-            @RequestParam(required = false) String author) {
-        System.out.println("Received PUT request: bookId=" + bookId + ", title=" + title + ", author=" + author);
-        bookService.updateBook(bookId, title, author);
+    // 책 수정 처리 (POST)
+    @PostMapping("/edit/{id}")
+    public String editBook(@PathVariable Long id, @ModelAttribute("book") Book book) {
+        Book existingBook = bookService.getBookById(id);
+        existingBook.setTitle(book.getTitle());
+        existingBook.setAuthor(book.getAuthor());
+        existingBook.setPrice(book.getPrice());
+
+        bookService.updateBook(existingBook);
+        return "redirect:/books";  // 수정 후 책 목록 페이지로 리다이렉트
     }
-
-
 }
