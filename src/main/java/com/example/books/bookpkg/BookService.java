@@ -46,4 +46,7 @@ public class BookService {
                 new IllegalStateException("id가 " + id + "인 책이 존재하지 않습니다.")
         );
     }
+    public void deleteBookById(Long id){
+        bookRepository.deleteById(id);
+    }
 }
