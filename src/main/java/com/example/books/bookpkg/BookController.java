@@ -1,11 +1,13 @@
 package com.example.books.bookpkg;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/books")
@@ -18,22 +20,22 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    // 모든 책 정보 반환 (책 목록 페이지)
+    // 책 목록
     @GetMapping
     public String getBooksPage(Model model) {
         List<Book> books = bookService.getBooks();
         model.addAttribute("books", books);
-        return "book";  // "book.html" 템플릿 반환
+        return "book";
     }
 
-    // 책 추가페이지 이동
+    // 책 추가 페이지 이동
     @GetMapping("/new")
     public String createBookForm(Model model) {
         model.addAttribute("book", new Book());
         return "add_book";
     }
 
-    // 새 책 정보 저장
+    // 새로운 책 정보 저장
     @PostMapping("/new")
     public String saveNewBook(@ModelAttribute("book") Book book) {
         bookService.addNewBook(book);
@@ -45,7 +47,7 @@ public class BookController {
     public String editBookForm(@PathVariable Long id, Model model) {
         Book book = bookService.getBookById(id);
         model.addAttribute("book", book);
-        return "edit";  // "edit.html" 템플릿 반환
+        return "edit";
     }
 
     // 책 정보 수정
@@ -57,12 +59,36 @@ public class BookController {
         existingBook.setPrice(book.getPrice());
 
         bookService.updateBook(existingBook);
-        return "redirect:/books";  // 수정 후 책 목록 페이지로 리다이렉트
+        return "redirect:/books";
     }
+
+
     @DeleteMapping("/delete/{id}")
-    @ResponseBody
-    public String deleteBook(@PathVariable Long id){
+    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
         bookService.deleteBookById(id);
-        return "삭제 완료";
+            return ResponseEntity.ok("삭제되었습니다.");
+       }
+
+
+       //도서 검색 페이지 이동
+    @GetMapping("/search")
+    public String searchBooksPage() {
+        return "search";
+    }
+
+    //id 조회로 책 정보 검색
+    @PostMapping("/search")
+    public String searchBookById(@RequestParam Long id, Model model) {
+        try{
+            Book book = bookService.getBookById(id);
+            model.addAttribute("book", book);
+            return "search";
+        }
+        catch (IllegalStateException e) {
+            model.addAttribute("error", "책을 찾을 수 없습니다.");
+            return "search";
+        }
+
     }
 }
+

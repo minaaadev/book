@@ -1,7 +1,7 @@
 package com.example.books.bookpkg;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Service;d
 import jakarta.transaction.Transactional;
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    // 책 목록 반환
+    // 책 목록
     public List<Book> getBooks() {
         return bookRepository.findAll();
     }
@@ -40,13 +40,17 @@ public class BookService {
         bookRepository.save(book);  // 책 정보 저장
     }
 
-    // id로 책 조회
-    public Book getBookById(Long id) {
-        return bookRepository.findById(id).orElseThrow(() ->
-                new IllegalStateException("id가 " + id + "인 책이 존재하지 않습니다.")
-        );
-    }
-    public void deleteBookById(Long id){
+    public void deleteBookById(Long id) {
+        if (!bookRepository.existsById(id)) {
+            throw new IllegalStateException("책이 존재하지 않습니다. id = " + id);
+        }
         bookRepository.deleteById(id);
     }
+
+    //id 조회로 책 정보 검색
+    public Book getBookById(Long id) {
+        return bookRepository.findById(id).orElseThrow(() ->
+                new IllegalStateException("id가 " + id + "인 책이 존재하지 않습니다."));
+    }
+
 }
