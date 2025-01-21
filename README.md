@@ -1,19 +1,19 @@
 # 도서 정보 관리 시스템 📚
 
-도서 정보를 추가하고, 수정, 삭제, 조회하는 시스템
+도서 목록에 도서를 추가하고 도서 정보를 수정, 삭제, 조회하는 시스템
 
 <br>
 
-## 기술 스택
-- Backend: Java, Spring boot
-- Database : Postgre SQL
+**기술 스택**
+
+Java, Spring boot, Postgre SQL
 
 <br>
 
 
 ## 시스템 동작과정
 
-추가한 도서 목록이 화면에 나타난다. 
+도서 목록 확인
 
 도서 추가버튼을 누르면 도서 제목, 작가,가격을 입력해 도서를 추가 할 수 있다. 
 
@@ -29,17 +29,18 @@
 <br>
 
 
-## 데이터베이스 테이블 구조 🗄️  
 
-![image](https://github.com/user-attachments/assets/a50265cb-9972-4d5e-b385-91ecee6d4048)
+## API 엔드포인트
+- http://localhost:8080/books : 메인 페이지, 도서 목록 확인
+- http://localhost:8080/books/new : 도서 추가 페이지, 새로운 도서 정보 저장
+- http://localhost:8080/books/search : 도서 조회 페이지, id를 조회해서 도서 정보 조회
+- http://localhost:8080/books/edit/{id} : 도서 수정 페이지, 해당 도서의 정보 수정
 
 <br>
 
 ## API 흐름
-<br>
 
-
-**도서 추가**
+### 도서 추가
 
 **사용자** : /books/add 페이지에서 도서 제목, 작가, 가격을 입력하고 추가 버튼 클릭(POST)
 
@@ -53,7 +54,7 @@ BookService는 도서 정보의 유효성 확인 후 BookRepository를 통해 Po
 
 <br>
 
-**도서 수정**
+### 도서 수정
 
 **사용자** : 수정 버튼을 클릭해 /books/edit/{id}페이지로 이동
 
@@ -71,7 +72,7 @@ BookRepository가 PostgreSQL에서 해당 ID의 도서 정보를 수정
 
 <br>
 
-**도서 삭제**
+### 도서 삭제
 
 **사용자** : 삭제 버튼 클릭 (POST 요청 전송)
 
@@ -79,11 +80,11 @@ BookRepository가 PostgreSQL에서 해당 ID의 도서 정보를 수정
 
 BookService는 도서 ID의 유효성을 확인한 후, BookRepository를 통해 PostgreSQL에서 해당 도서를 삭제
 
-**사용자** : 해당 도서가 도서 목록에서 삭제된 것 확인 가능 
+**사용자** : 해당 도서가 도서 목록에서 삭제된 것 확인 가능
 
 <br>
 
-**ID로 도서정보 조회** 
+### ID로 도서정보 조회
 
 **사용자** : /books/search 페이지에서 책 ID를 입력 후 조회 버튼 클릭(POST)
 
@@ -94,6 +95,14 @@ BookRepository가 PostgreSQL에서 해당 ID의 도서정보 조회
 조회 결과를 DTO로 변환 후 Controller에 반환
 
 Controller는 데이터를 search.html 페이지에 전달해 렌더링
+
+
+<br>
+
+
+## 데이터베이스 테이블 구조 🗄️  
+
+![image](https://github.com/user-attachments/assets/a50265cb-9972-4d5e-b385-91ecee6d4048)
 
 
 
