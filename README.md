@@ -83,7 +83,7 @@ Controller는 데이터를 search.html 페이지에 전달해 렌더링
 <br>
 
 
-## 데이터베이스 테이블 구조 🗄️  
+## 데이터베이스 테이블 구조
 
 ![image](https://github.com/user-attachments/assets/a50265cb-9972-4d5e-b385-91ecee6d4048)
 
