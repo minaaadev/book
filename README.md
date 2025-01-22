@@ -14,10 +14,11 @@ Java, Spring boot, Postgre SQL
 
 
 ## API 엔드포인트
-- http://localhost:8080/books : 메인 페이지, 도서 목록 확인
-- http://localhost:8080/books/new : 도서 추가 페이지, 새로운 도서 정보 저장
-- http://localhost:8080/books/search : 도서 조회 페이지, id를 조회해서 도서 정보 조회
-- http://localhost:8080/books/edit/{id} : 도서 수정 페이지, 해당 도서의 정보 수정
+- GET /books : 메인 페이지, 도서 목록 확인
+- POST /books/new : 도서 추가 페이지, 새로운 도서 정보 저장
+- GET /books/search : 도서 조회 페이지, id를 조회해서 도서 정보 조회
+- PUT /books/edit/{id} : 도서 수정 페이지, 해당 도서의 정보 수정
+- DELETE books/{id} : 특정 id의 도서 삭제 
 
 <br>
 
