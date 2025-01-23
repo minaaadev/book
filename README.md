@@ -72,13 +72,13 @@ BookService는 도서 ID의 유효성을 확인한 후, BookRepository를 통해
 
 **사용자** : /books/search 페이지에서 책 ID를 입력 후 조회 버튼 클릭(POST)
 
-**서버** : BookController가 GET 요청을 받고, BookService에서 ID 유효성 확인 후 BookRepository로 전달
+**서버** : BookController가 GET 요청을 받고, BookService에 ID 전달
 
-BookRepository가 PostgreSQL에서 해당 ID의 도서정보 조회
+BookService에서 ID 유효성 확인 후 BookRepository로 전달
 
-조회 결과를 DTO로 변환 후 Controller에 반환
+BookRepository가 PostgreSQL에서 해당 ID의 도서정보 조회하고 결과를 DTO로 변환 후 Controller에 반환
 
-Controller는 데이터를 search.html 페이지에 전달해 렌더링
+Controller는 DTO를 search.html 페이지에 전달해 화면에 나타냄
 
 
 <br>
@@ -89,6 +89,14 @@ Controller는 데이터를 search.html 페이지에 전달해 렌더링
 ![image](https://github.com/user-attachments/assets/a50265cb-9972-4d5e-b385-91ecee6d4048)
 
 <br>
+
+## postman에서 api 테스트
+![image](https://github.com/user-attachments/assets/2d62eb15-d501-4c0a-ad15-0f1dd111e69b)
+
+200 ok, 요청이 성공적으로 되었다는 상태코드가 발생한다.
+
+<br>
+
 
 ## 시스템 동작과정
 ![image](https://github.com/user-attachments/assets/e1de76a8-2998-475c-b690-16d0925e2a25)
